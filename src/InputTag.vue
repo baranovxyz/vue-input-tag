@@ -8,8 +8,10 @@
     isodate: new RegExp(/^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/)
   }
   /* eslint-enable */
+
   export default {
     name: 'InputTag',
+
     props: {
       tags: {
         type: Array,
@@ -50,6 +52,7 @@
         default: false
       }
     },
+
     data () {
       return {
         newTag: '',
@@ -57,28 +60,34 @@
         isInputActive: false
       }
     },
+
     watch: {
       tags () {
         this.innerTags = [...this.tags]
       }
     },
+
     computed: {
       isLimit: function () {
         return this.limit > 0 && Number(this.limit) === this.innerTags.length
       }
     },
+
     methods: {
       focusNewTag () {
         if (this.readOnly || !this.$el.querySelector('.new-tag')) { return }
         this.$el.querySelector('.new-tag').focus()
       },
+
       handleInputFocus () {
         this.isInputActive = true
       },
+
       handleInputBlur (e) {
         this.isInputActive = false
         this.addNew(e)
       },
+
       addNew (e) {
         // Do nothing if the current key code is
         // not within those defined within the addTagOnKeys prop array.
@@ -90,6 +99,7 @@
           e.stopPropagation()
           e.preventDefault()
         }
+
         if (
           this.newTag &&
           (this.allowDuplicates || this.innerTags.indexOf(this.newTag) === -1) &&
@@ -100,6 +110,7 @@
           this.tagChange()
         }
       },
+
       validateIfNeeded (tagValue) {
         if (this.validate === '' || this.validate === undefined) {
           return true
@@ -112,15 +123,18 @@
         }
         return true
       },
+
       remove (index) {
         this.innerTags.splice(index, 1)
         this.tagChange()
       },
+
       removeLastTag () {
         if (this.newTag) { return }
         this.innerTags.pop()
         this.tagChange()
       },
+
       tagChange () {
         this.$emit('update:tags', this.innerTags)
       }
@@ -169,6 +183,7 @@
     display: flex;
     flex-wrap: wrap;
   }
+
   .vue-input-tag-wrapper .input-tag {
     background-color: #cde69c;
     border-radius: 2px;
@@ -181,17 +196,21 @@
     margin-right: 4px;
     padding: 3px;
   }
+
   .vue-input-tag-wrapper .input-tag .remove {
     cursor: pointer;
     font-weight: bold;
     color: #638421;
   }
+
   .vue-input-tag-wrapper .input-tag .remove:hover {
     text-decoration: none;
   }
+
   .vue-input-tag-wrapper .input-tag .remove::before {
     content: " x";
   }
+
   .vue-input-tag-wrapper .new-tag {
     background: transparent;
     border: 0;
@@ -205,6 +224,7 @@
     padding-left: 0;
     flex-grow: 1;
   }
+
   .vue-input-tag-wrapper.read-only {
     cursor: default;
   }
