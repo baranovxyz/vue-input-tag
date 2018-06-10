@@ -1,51 +1,51 @@
-const path = require('path')
-const webpack = require('webpack')
+const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
-  entry: './docs/main.js',
+  entry: "./docs/main.js",
 
   output: {
-    path: path.resolve(__dirname, './docs/build'),
-    publicPath: 'docs/build/',
-    filename: 'docs.js'
+    path: path.resolve(__dirname, "./docs/build"),
+    publicPath: "docs/build/",
+    filename: "docs.js"
   },
 
   module: {
     rules: [
       {
         test: /\.(js|vue)$/,
-        loader: 'eslint-loader',
-        enforce: 'pre',
-        include: [path.resolve(__dirname, './src')]
+        loader: "eslint-loader",
+        enforce: "pre",
+        include: [path.resolve(__dirname, "./src")]
       },
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
+        loader: "vue-loader",
         options: {
           loaders: {
-            'scss': 'vue-style-loader!css-loader!sass-loader',
-            'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
+            scss: "vue-style-loader!css-loader!sass-loader",
+            sass: "vue-style-loader!css-loader!sass-loader?indentedSyntax"
           }
         }
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
         exclude: /node_modules/
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
+        loader: "file-loader",
         options: {
-          name: '[name].[ext]?[hash]'
+          name: "[name].[ext]?[hash]"
         }
       }
     ]
   },
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
-      '@': path.resolve(__dirname, './src')
+      vue$: "vue/dist/vue.esm.js",
+      "@": path.resolve(__dirname, "./src")
     }
   },
   devServer: {
@@ -55,25 +55,25 @@ module.exports = {
   performance: {
     hints: false
   },
-  devtool: '#eval-source-map'
-}
+  devtool: "#eval-source-map"
+};
 
-if (process.env.NODE_ENV === 'production') {
-  module.exports.entry = './src/index.js'
+if (process.env.NODE_ENV === "production") {
+  module.exports.entry = "./src/index.js";
 
   module.exports.output = {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: 'dist/',
-    filename: 'vue-input-tag.min.js',
-    libraryTarget: 'umd'
-  }
+    path: path.resolve(__dirname, "./dist"),
+    publicPath: "dist/",
+    filename: "vue-input-tag.min.js",
+    libraryTarget: "umd"
+  };
 }
 
-if (process.env.NODE_ENV === 'docs' || process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map'
+if (process.env.NODE_ENV === "docs" || process.env.NODE_ENV === "production") {
+  module.exports.devtool = "#source-map";
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
-      'process.env': {
+      "process.env": {
         NODE_ENV: '"production"'
       }
     }),
@@ -86,5 +86,5 @@ if (process.env.NODE_ENV === 'docs' || process.env.NODE_ENV === 'production') {
     new webpack.LoaderOptionsPlugin({
       minimize: true
     })
-  ])
+  ]);
 }

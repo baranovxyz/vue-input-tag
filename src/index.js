@@ -1,5 +1,5 @@
-import InputTag from './InputTag.vue'
+import InputTag from "./InputTag.vue";
 
-export { InputTag }
+export { InputTag };
 
-export default InputTag
+export default InputTag;
