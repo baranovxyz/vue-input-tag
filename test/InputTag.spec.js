@@ -315,7 +315,6 @@ describe('InputTag.vue', () => {
       InputTagISODateOnly.newTag = '2002-04-03'
       InputTagISODateOnly.addNew()
 
-      console.log(InputTagISODateOnly.innerTags)
       expect(InputTagISODateOnly.innerTags.length).toEqual(8)
     })
   })

@@ -1,5 +1,5 @@
 <script>
-  /*eslint-disable*/
+  /* eslint-disable */
   const validators = {
     email: new RegExp(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
     url: new RegExp(/^(https?|ftp|rmtp|mms):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?\/?/i),
@@ -7,7 +7,7 @@
     digits: new RegExp(/^[\d() \.\:\-\+#]+$/),
     isodate: new RegExp(/^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/)
   }
-  /*eslint-enable*/
+  /* eslint-enable */
   export default {
     name: 'InputTag',
     props: {
@@ -24,7 +24,7 @@
         default: false
       },
       validate: {
-        type: String | Object | Function,
+        type: String | Function | Object,
         default: ''
       },
       addTagOnKeys: {
@@ -53,7 +53,8 @@
     data () {
       return {
         newTag: '',
-        innerTags: [...this.tags]
+        innerTags: [...this.tags],
+        isInputActive: false
       }
     },
     watch: {
@@ -70,6 +71,13 @@
       focusNewTag () {
         if (this.readOnly || !this.$el.querySelector('.new-tag')) { return }
         this.$el.querySelector('.new-tag').focus()
+      },
+      handleInputFocus () {
+        this.isInputActive = true
+      },
+      handleInputBlur (e) {
+        this.isInputActive = false
+        this.addNew(e)
       },
       addNew (e) {
         // Do nothing if the current key code is
@@ -121,7 +129,14 @@
 </script>
 
 <template>
-  <div @click="focusNewTag()" :class="{'read-only': readOnly}" class="vue-input-tag-wrapper">
+  <div
+    @click="focusNewTag()"
+    :class="{
+      'read-only': readOnly,
+      'vue-input-tag-wrapper--active': isInputActive,
+    }"
+    class="vue-input-tag-wrapper"
+  >
     <span v-for="(tag, index) in innerTags" :key="index" class="input-tag">
       <span>{{ tag }}</span>
       <a v-if="!readOnly" @click.prevent.stop="remove(index)" class="remove"></a>
@@ -134,7 +149,8 @@
       v-model                  = "newTag"
       v-on:keydown.delete.stop = "removeLastTag"
       v-on:keydown             = "addNew"
-      v-on:blur                = "addNew"
+      v-on:blur                = "handleInputBlur"
+      v-on:focus               = "handleInputFocus"
       class                    = "new-tag"
     />
   </div>
