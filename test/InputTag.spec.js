@@ -251,6 +251,102 @@ describe('InputTag.vue', () => {
     })
   })
 
+  describe('do not allow duplicate tags by default', () => {
+    const InputTagISODateOnly = new ClonedComponent({
+      propsData: {}
+    }).$mount()
+
+    it('should only add unique tags', () => {
+      InputTagISODateOnly.newTag = 'foo'
+      InputTagISODateOnly.addNew()
+
+      InputTagISODateOnly.newTag = '123'
+      InputTagISODateOnly.addNew()
+
+      InputTagISODateOnly.newTag = 'mati@tucci.me'
+      InputTagISODateOnly.addNew()
+
+      InputTagISODateOnly.newTag = 'https://tucci.me'
+      InputTagISODateOnly.addNew()
+
+      InputTagISODateOnly.newTag = '123'
+      InputTagISODateOnly.addNew()
+
+      InputTagISODateOnly.newTag = 'mati@tucci.me'
+      InputTagISODateOnly.addNew()
+
+      InputTagISODateOnly.newTag = 'https://tucci.me'
+      InputTagISODateOnly.addNew()
+
+      InputTagISODateOnly.newTag = '2002-04-03'
+      InputTagISODateOnly.addNew()
+
+      expect(InputTagISODateOnly.innerTags.length).toEqual(5)
+    })
+  })
+
+  describe('allow duplicate tags if allowDuplicates prop is true', () => {
+    const InputTagISODateOnly = new ClonedComponent({
+      propsData: {allowDuplicates: true}
+    }).$mount()
+
+    it('should add all tags', () => {
+      InputTagISODateOnly.newTag = 'foo'
+      InputTagISODateOnly.addNew()
+
+      InputTagISODateOnly.newTag = '123'
+      InputTagISODateOnly.addNew()
+
+      InputTagISODateOnly.newTag = 'mati@tucci.me'
+      InputTagISODateOnly.addNew()
+
+      InputTagISODateOnly.newTag = 'https://tucci.me'
+      InputTagISODateOnly.addNew()
+
+      InputTagISODateOnly.newTag = '123'
+      InputTagISODateOnly.addNew()
+
+      InputTagISODateOnly.newTag = 'mati@tucci.me'
+      InputTagISODateOnly.addNew()
+
+      InputTagISODateOnly.newTag = 'https://tucci.me'
+      InputTagISODateOnly.addNew()
+
+      InputTagISODateOnly.newTag = '2002-04-03'
+      InputTagISODateOnly.addNew()
+
+      console.log(InputTagISODateOnly.innerTags)
+      expect(InputTagISODateOnly.innerTags.length).toEqual(8)
+    })
+  })
+
+  describe('validate with function', () => {
+    const allowedTags = ['mati@tucci.me', 'https://tucci.me']
+    const validateFunction = tag => allowedTags.includes(tag)
+    const InputTagISODateOnly = new ClonedComponent({
+      propsData: { validate: validateFunction }
+    }).$mount()
+
+    it('should only add values validated with function', () => {
+      InputTagISODateOnly.newTag = 'foo'
+      InputTagISODateOnly.addNew()
+
+      InputTagISODateOnly.newTag = '123'
+      InputTagISODateOnly.addNew()
+
+      InputTagISODateOnly.newTag = 'mati@tucci.me'
+      InputTagISODateOnly.addNew()
+
+      InputTagISODateOnly.newTag = 'https://tucci.me'
+      InputTagISODateOnly.addNew()
+
+      InputTagISODateOnly.newTag = '2002-04-03'
+      InputTagISODateOnly.addNew()
+
+      expect(InputTagISODateOnly.innerTags.join()).toEqual(allowedTags.join())
+    })
+  })
+
   describe('CSS classes depending of input state', () => {
     it('should add activity class when input is focused', () => {
       InputTagComponent.$refs.inputtag.focus()
