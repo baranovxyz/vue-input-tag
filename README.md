@@ -56,7 +56,7 @@ Vue.component('input-tag', InputTag);
 | limit | String or Number | -1 (none) | Set a limit for the amount of tags |
 | validate | String or Function or Object | "" | Apply certain validator for user input. Choose from `email`, `url`, `text`, `digits` or `isodate`. Or pass a `function` or a `RegExp` object for custom validation |
 | addTagOnKeys | Array | [ 13 (return), 188 (comma), 9 (tab) ] | Keys that are going to add the new tag
-| allowDuplicate | Boolean | false | Allow duplicate tags
+| allowDuplicates | Boolean | false | Allow duplicate tags
 
 **This project was built with [generator-vue-component](https://github.com/ianaya89/generator-vue-component) ❤️**
 
