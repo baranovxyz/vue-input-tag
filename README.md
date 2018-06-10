@@ -54,7 +54,7 @@ Vue.component('input-tag', InputTag);
 | read-only | Boolean | false | Set input to readonly |
 | addTagOnBlur | Boolean | false | Add tag on input blur |
 | limit | String or Number | -1 (none) | Set a limit for the amount of tags |
-| validate | String/Function/Object | "" | Apply certain validator for user input. Choose from `email`, `url`, `text`, `digits` or `isodate`. Or pass a `function` or a `RegExp` object for custom validation |
+| validate | String or Function or Object | "" | Apply certain validator for user input. Choose from `email`, `url`, `text`, `digits` or `isodate`. Or pass a `function` or a `RegExp` object for custom validation |
 | addTagOnKeys | Array | [ 13 (return), 188 (comma), 9 (tab) ] | Keys that are going to add the new tag
 | allowDuplicate | Boolean | false | Allow duplicate tags
 
