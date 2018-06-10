@@ -45,6 +45,10 @@ Vue.component('input-tag', InputTag);
 ```html
 <input-tag :tags.sync="tagsArray"></input-tag>
 ```
+or to only allow adding 'green', 'yellow' or 'red' tags:
+```html
+<input-tag :tags.sync="tagsArray" :validate="tag => ['green','yellow','red'].includes(tag)"></input-tag>
+```
 
 ## Props
 | Name | Type | Default | Description |
